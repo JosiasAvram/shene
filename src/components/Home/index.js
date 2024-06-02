@@ -1,11 +1,26 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./style.css";
 import Stock from "../../assets/klipartz.com.png";
 import Remito from "../../assets/pngegg.png";
 import Logout from "../../assets/cerrar-sesion.png";
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/");
+    }
+    // eslint-disable-next-line
+  }, []);
+
+  const deleteCookie = () => {
+    localStorage.removeItem("token");
+  };
+
   return (
     <div className="home">
       <nav className="navbar">
@@ -23,7 +38,12 @@ const Home = () => {
           </li>
           <li>
             <Link to="/">
-              <img className="logout" src={Logout} alt="Cerrar Sesión" />
+              <img
+                className="logout"
+                src={Logout}
+                alt="Cerrar Sesión"
+                onClick={deleteCookie}
+              />
             </Link>
           </li>
         </ul>
@@ -40,7 +60,7 @@ const Home = () => {
         </div>
         <div className="big-button-container-info">
           <h1>Cargar Remito</h1>
-          <Link to="/stock" className="big-button">
+          <Link to="/remitos" className="big-button">
             <img src={Remito} alt="Stock" />
           </Link>
         </div>

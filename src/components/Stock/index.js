@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./style.css";
 import Logout from "../../assets/cerrar-sesion.png";
 import stockData from "../../data/stockData.json";
@@ -8,6 +8,16 @@ const Stock = () => {
   const [data, setData] = useState(stockData);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [showLowValue, setShowLowValue] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/");
+    }
+    // eslint-disable-next-line
+  }, []);
 
   const handleSortByKey = () => {
     const sortedData = [...data].sort((a, b) => a.item.localeCompare(b.item));
@@ -37,6 +47,10 @@ const Stock = () => {
 
   const toggleShowLowValue = () => {
     setShowLowValue(!showLowValue);
+  };
+
+  const deleteCookie = () => {
+    localStorage.removeItem("token");
   };
 
   return (
@@ -71,6 +85,7 @@ const Stock = () => {
                 className="logout no-print"
                 src={Logout}
                 alt="Cerrar Sesión"
+                onClick={deleteCookie}
               />
             </Link>
           </li>
