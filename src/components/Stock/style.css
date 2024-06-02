@@ -1,0 +1,151 @@
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: "Arial", sans-serif;
+  line-height: 1.6;
+  background-color: #f8f9fa;
+}
+
+.stock {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #343a40;
+  color: #ffffff;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-size: 24px;
+}
+
+.section-title {
+  font-family: Roboto;
+  font-size: xxx-large;
+  padding: 0px;
+  margin: 0px;
+}
+
+.link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.nav-links {
+  list-style-type: none;
+  display: flex;
+}
+
+.nav-links li {
+  margin-right: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.logout {
+  width: 25px;
+  height: 25px;
+}
+
+/* Dropdown container */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Botón del dropdown */
+.dropbtn {
+  background-color: #4caf50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Dropdown contenido */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  z-index: 1;
+}
+
+/* Enlace en el dropdown */
+.dropdown-content button {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+
+/* Enlace en el dropdown al hacer hover */
+.dropdown-content button:hover {
+  background-color: #f1f1f1;
+}
+
+/* Muestra el dropdown contenido cuando el mouse está encima del botón */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Cambia el color del botón cuando el mouse está encima */
+.dropbtn:hover {
+  background-color: #45a049;
+}
+
+/* Estilos para la tabla */
+.table-container {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 600px;
+  margin: 25px auto;
+}
+
+.table-wrapper {
+  flex: 0 0 calc(50% - 20px);
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.key-column {
+  width: 250px;
+  background-color: #dbd8d8;
+}
+
+.value-column {
+  width: 80px;
+  text-align: center;
+  background-color: #dbd8d8;
+}
+
+.low-value {
+  background-color: yellow;
+}
+
+@media print {
+  .no-print {
+    display: none;
+  }
+}

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
+import usersData from "../../data/users.json";
 
-// Importamos las imágenes de los ojos
-import showPasswordIcon from "../assets/ojo-show.png";
-import hidePasswordIcon from "../assets/ojo-hide.png";
+import showPasswordIcon from "../../assets/ojo-show.png";
+import hidePasswordIcon from "../../assets/ojo-hide.png";
+import packagedMeat from "../../assets/carne-envasada.jpg";
 
 const Login = () => {
   const [user, setUser] = useState("");
@@ -17,7 +18,11 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleUserChange = (event) => {
-    setUser(event.target.value);
+    const sanitizedValue = event.target.value
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+    setUser(sanitizedValue);
     setIsUserValid(true);
     setUserError("");
   };
@@ -34,24 +39,38 @@ const Login = () => {
 
   const checkUser = (event) => {
     event.preventDefault();
-    let valid = true;
-    if (user !== "josias") {
+    let userValid = false;
+    let passwordValid = false;
+
+    usersData.forEach((u) => {
+      if (u.username === user) {
+        userValid = true;
+        if (u.password === password) {
+          passwordValid = true;
+        }
+      }
+    });
+
+    if (!userValid) {
       setUserError("Usuario incorrecto");
-      setIsUserValid(false);
-      valid = false;
+    } else {
+      if (!passwordValid) {
+        setPasswordError("Contraseña incorrecta");
+      }
     }
-    if (password !== "35531716") {
-      setPasswordError("Contraseña incorrecta");
-      setIsPasswordValid(false);
-      valid = false;
-    }
-    if (valid) {
-      navigate('/dashboard');
+
+    if (userValid && passwordValid) {
+      navigate("/home");
     }
   };
 
   return (
     <div className="login">
+      <img
+        className="background-img"
+        src={packagedMeat}
+        alt="Descripción de la imagen"
+      />
       <div className="login-container">
         <form className="login-form" onSubmit={checkUser}>
           <h2>Login</h2>
@@ -64,7 +83,7 @@ const Login = () => {
               required
               value={user}
               onChange={handleUserChange}
-              className={!isUserValid ? 'error' : ''}
+              className={!isUserValid ? "error" : ""}
             />
             {userError && <p className="error-message">{userError}</p>}
           </div>
@@ -78,7 +97,7 @@ const Login = () => {
                 required
                 value={password}
                 onChange={handlePasswordChange}
-                className={!isPasswordValid ? 'error' : ''}
+                className={!isPasswordValid ? "error" : ""}
               />
               <img
                 className="password-toggle"
