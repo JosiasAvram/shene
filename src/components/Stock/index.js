@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./style.css";
 import Logout from "../../assets/cerrar-sesion.png";
-import stockData from "../../data/stockData.json";
+import axios from "axios";
 
 const Stock = () => {
-  const [data, setData] = useState(stockData);
+  const [data, setData] = useState([]);
   const [showLowValue, setShowLowValue] = useState(false);
   const navigate = useNavigate();
 
@@ -18,18 +18,32 @@ const Stock = () => {
     // eslint-disable-next-line
   }, []);
 
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/stock")
+      .then(function (response) {
+        setData(response.data);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      });
+  }, []);
+
   const handleSortByKey = () => {
-    const sortedData = [...data].sort((a, b) => a.item.localeCompare(b.item));
+    const sortedData = [...data].sort((a, b) =>
+      a.productName.localeCompare(b.productName)
+    );
     setData(sortedData);
   };
 
   const handleSortByValueDescending = () => {
-    const sortedData = [...data].sort((a, b) => b.value - a.value);
+    const sortedData = [...data].sort((a, b) => b.units - a.units);
     setData(sortedData);
   };
 
   const handleSortByValueAscending = () => {
-    const sortedData = [...data].sort((a, b) => a.value - b.value);
+    const sortedData = [...data].sort((a, b) => a.units - b.units);
     setData(sortedData);
   };
 
@@ -122,18 +136,18 @@ const Stock = () => {
           </thead>
           <tbody>
             {data.map((item, index) => {
-              if (showLowValue && item.value >= 10) {
+              if (showLowValue && item.units >= 10) {
                 return null; // No renderizar la fila si showLowValue es true y el valor es mayor o igual a 10
               }
               return (
                 <tr key={index}>
-                  <td className="key-column">{item.item}</td>
+                  <td className="key-column">{item.productName}</td>
                   <td
                     className={`value-column ${
-                      item.value < 10 ? "low-value" : ""
+                      item.units < 10 ? "low-value" : ""
                     }`}
                   >
-                    {item.value}
+                    {item.units}
                   </td>
                 </tr>
               );
