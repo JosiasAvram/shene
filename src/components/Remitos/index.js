@@ -199,7 +199,7 @@ const Remitos = () => {
               </tbody>
             </table>
             <input
-              type="text"
+              type="number"
               value={productCode}
               onChange={(e) => setProductCode(e.target.value)}
               placeholder="Código de Producto"

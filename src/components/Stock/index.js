@@ -130,8 +130,9 @@ const Stock = () => {
         <table>
           <thead>
             <tr>
-              <th className="key-column">Productos</th>
-              <th className="value-column">Unidades</th>
+              <th className="titleProductName-column">Productos</th>
+              <th className="units-column">Unidades</th>
+              <th className="titleBarcode-column">Codigo de Barra</th>
             </tr>
           </thead>
           <tbody>
@@ -141,14 +142,15 @@ const Stock = () => {
               }
               return (
                 <tr key={index}>
-                  <td className="key-column">{item.productName}</td>
+                  <td className="productName-column">{item.productName}</td>
                   <td
-                    className={`value-column ${
-                      item.units < 10 ? "low-value" : ""
+                    className={`units-column ${
+                      item.units < 10 ? "low-units" : ""
                     }`}
                   >
                     {item.units}
                   </td>
+                  <td className="barcode-column">{item.barcode}</td>
                 </tr>
               );
             })}

@@ -107,19 +107,37 @@ td {
   text-align: left;
 }
 
-.key-column {
+.titleProductName-column {
+  width: 250px;
+  background-color: #dbd8d8;
+  text-align: center;
+}
+
+.productName-column {
   width: 250px;
   background-color: #dbd8d8;
 }
 
-.value-column {
+.titleBarcode-column {
+  width: 250px;
+  background-color: #dbd8d8;
+  text-align: center;
+}
+
+.units-column {
   width: 80px;
   text-align: center;
   background-color: #dbd8d8;
 }
 
-.low-value {
+.low-units {
   background-color: yellow;
+}
+
+.barcode-column {
+  width: 250px;
+  text-align: center;
+  font-weight: bold;
 }
 
 @media print {
