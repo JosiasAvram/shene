@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
-import usersData from "../../data/users.json";
 
 import showPasswordIcon from "../../assets/ojo-show.png";
 import hidePasswordIcon from "../../assets/ojo-hide.png";
 import packagedMeat from "../../assets/carne-envasada.jpg";
+import axios from "axios";
 
 const Login = () => {
   const [user, setUser] = useState("");
@@ -15,7 +15,20 @@ const Login = () => {
   const [isUserValid, setIsUserValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+  const [allUsers, setAllUsers] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/users")
+      .then(function (response) {
+        setAllUsers(response.data);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      });
+  }, []);
 
   const handleUserChange = (event) => {
     const sanitizedValue = event.target.value
@@ -42,8 +55,8 @@ const Login = () => {
     let userValid = false;
     let passwordValid = false;
 
-    usersData.forEach((u) => {
-      if (u.username === user) {
+    allUsers.forEach((u) => {
+      if (u.loginUser === user) {
         userValid = true;
         if (u.password === password) {
           passwordValid = true;
