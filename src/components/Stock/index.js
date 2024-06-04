@@ -6,7 +6,6 @@ import stockData from "../../data/stockData.json";
 
 const Stock = () => {
   const [data, setData] = useState(stockData);
-  const [dropdownVisible, setDropdownVisible] = useState(false);
   const [showLowValue, setShowLowValue] = useState(false);
   const navigate = useNavigate();
 
@@ -22,27 +21,20 @@ const Stock = () => {
   const handleSortByKey = () => {
     const sortedData = [...data].sort((a, b) => a.item.localeCompare(b.item));
     setData(sortedData);
-    setDropdownVisible(false);
   };
 
   const handleSortByValueDescending = () => {
     const sortedData = [...data].sort((a, b) => b.value - a.value);
     setData(sortedData);
-    setDropdownVisible(false);
   };
 
   const handleSortByValueAscending = () => {
     const sortedData = [...data].sort((a, b) => a.value - b.value);
     setData(sortedData);
-    setDropdownVisible(false);
   };
 
   const handlePrint = () => {
     window.print();
-  };
-
-  const toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
   };
 
   const toggleShowLowValue = () => {
@@ -92,33 +84,32 @@ const Stock = () => {
         </ul>
       </nav>
 
-      <div className="dropdown no-print">
-        <button className="dropbtn no-print" onClick={toggleDropdown}>
-          Opciones de Ordenamiento
-        </button>
-        {dropdownVisible && (
-          <div className="dropdown-content no-print">
-            <button onClick={handleSortByKey}>Ordenar por Producto</button>
-            <button onClick={handleSortByValueDescending}>
-              Ordenar por Unidades (Descendente)
-            </button>
-            <button onClick={handleSortByValueAscending}>
-              Ordenar por Unidades (Ascendente)
-            </button>
-            <button onClick={handlePrint}>Imprimir Tabla</button>
-          </div>
-        )}
-      </div>
+      <div className="filter-container no-print">
+        <div className="filter-buttons">
+          <button className="filter-btn" onClick={handleSortByKey}>
+            Ordenar A - Z
+          </button>
+          <button className="filter-btn" onClick={handleSortByValueDescending}>
+            Ordenar 100 - 0
+          </button>
+          <button className="filter-btn" onClick={handleSortByValueAscending}>
+            Ordenar 0 - 100
+          </button>
+          <button className="filter-btn" onClick={handlePrint}>
+            Imprimir
+          </button>
+        </div>
 
-      <div className="filter no-print">
-        <label>
-          <input
-            type="checkbox"
-            checked={showLowValue}
-            onChange={toggleShowLowValue}
-          />
-          Mostrar solo productos con valores menores a 10
-        </label>
+        <div className="filter">
+          <label>
+            <input
+              type="checkbox"
+              checked={showLowValue}
+              onChange={toggleShowLowValue}
+            />
+            Productos menores a 10
+          </label>
+        </div>
       </div>
 
       <div className="table-container">
