@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./style.css";
-import Logout from "../../assets/cerrar-sesion.png";
+import Logout from "../../../assets/cerrar-sesion.png";
 import axios from "axios";
 
-const Stock = () => {
+const VerStock = () => {
   const [data, setData] = useState([]);
   const [showLowValue, setShowLowValue] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -21,7 +21,7 @@ const Stock = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/stock")
+      .get("http://localhost:8000/client-stock")
       .then(function (response) {
         setData(response.data);
       })
@@ -63,22 +63,20 @@ const Stock = () => {
 
     return matchesSearch && (!showLowValue || hasLowUnits);
   });
-
   return (
-    <div className="stock">
+    <div className="home">
       <nav className="navbar">
-        <div className="logo no-print">Logo</div>
+        <div className="logo">Logo</div>
         <h1 className="section-title">
-          <Link to="/home" className="link">
-            Stock Frescos
+          <Link to="/clientes" className="link">
+            Ver Stock
           </Link>
         </h1>
-
-        <ul className="nav-links no-print">
+        <ul className="nav-links">
           <li>
             <Link to="/">
               <img
-                className="logout no-print"
+                className="logout"
                 src={Logout}
                 alt="Cerrar Sesión"
                 onClick={deleteCookie}
@@ -154,4 +152,4 @@ const Stock = () => {
   );
 };
 
-export default Stock;
+export default VerStock;

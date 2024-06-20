@@ -65,7 +65,7 @@ const StockCongelados = () => {
   });
 
   return (
-    <div className="stock">
+    <div className="stock-froozen">
       <nav className="navbar">
         <div className="logo no-print">Logo</div>
         <h1 className="section-title">
@@ -89,17 +89,6 @@ const StockCongelados = () => {
       </nav>
 
       <div className="filter-container no-print">
-        <div className="checkbox-container">
-          <label>
-            <input
-              type="checkbox"
-              checked={showLowValue}
-              onChange={toggleShowLowValue}
-            />
-            Productos menores a 10
-          </label>
-        </div>
-
         <div className="search-container">
           <input
             type="text"
@@ -117,6 +106,17 @@ const StockCongelados = () => {
             Imprimir
           </button>
         </div>
+
+        <div className="checkbox-container">
+          <label>
+            <input
+              type="checkbox"
+              checked={showLowValue}
+              onChange={toggleShowLowValue}
+            />
+            Productos menores a 10
+          </label>
+        </div>
       </div>
 
       <div className="table-container">
@@ -125,7 +125,7 @@ const StockCongelados = () => {
             <thead>
               <tr>
                 <th className="titleProductName-column">Productos</th>
-                <th className="units-column">Unidades Congeladas</th>
+                <th className="units-column">Unidades</th>
                 <th className="titleBarcode-column">Codigo de Barra</th>
               </tr>
             </thead>

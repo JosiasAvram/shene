@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./style.css";
 import Logout from "../../assets/cerrar-sesion.png";
 
-const Home = () => {
+const Clientes = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,7 +23,11 @@ const Home = () => {
     <div className="home">
       <nav className="navbar">
         <div className="logo">Logo</div>
-        <h1 className="section-title">Inicio</h1>
+        <h1 className="section-title">
+          <Link to="/home" className="link">
+            Clientes
+          </Link>
+        </h1>
         <ul className="nav-links">
           <li>
             <Link to="/">
@@ -43,32 +47,32 @@ const Home = () => {
       <div className="section-button-container">
         <div className="big-button-container">
           <div className="big-button-container-info">
-            <Link to="/stock" className="big-button">
-              <h1>Stock Frescos</h1>
+            <Link to="/clientes/ver-stock" className="big-button">
+              <h1>Ver Stock</h1>
             </Link>
           </div>
 
           <div className="big-button-container-info">
-            <Link to="/stock-congelados" className="big-button">
-              <h1>Stock Congelados</h1>
+            <Link to="/clientes/bajas" className="big-button">
+              <h1>Bajas</h1>
             </Link>
           </div>
 
           <div className="big-button-container-info">
-            <Link to="/remitos" className="big-button">
-              <h1>Stock Productos Procesados</h1>
+            <Link to="/clientes/altas" className="big-button">
+              <h1>Altas</h1>
             </Link>
           </div>
 
           <div className="big-button-container-info">
-            <Link to="/precios" className="big-button">
-              <h1>Precio por Kilo</h1>
+            <Link to="/clientes/remitos-de-venta" className="big-button">
+              <h1>Remito de Venta</h1>
             </Link>
           </div>
 
           <div className="big-button-container-info">
-            <Link to="/clientes" className="big-button">
-              <h1>Clientes</h1>
+            <Link to="/clientes/cargar-stock" className="big-button">
+              <h1>Cargar Stock</h1>
             </Link>
           </div>
         </div>
@@ -77,4 +81,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Clientes;

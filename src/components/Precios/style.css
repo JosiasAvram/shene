@@ -7,7 +7,7 @@ body {
   background-color: #f8f9fa;
 }
 
-.stock-froozen {
+.price {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -69,8 +69,8 @@ body {
 
 .filter-buttons {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .filter-btn {
@@ -104,13 +104,6 @@ body {
   border-radius: 4px;
 }
 
-/* Checkbox container */
-.checkbox-container {
-  display: flex;
-  align-items: center;
-  margin-left: 20px;
-}
-
 /* Estilos para la tabla */
 .table-container {
   display: flex;
@@ -126,8 +119,7 @@ td {
   text-align: left;
 }
 
-.titleProductName-column,
-.titleBarcode-column {
+.titleProductName-column {
   width: 250px;
   background-color: #dbd8d8;
   text-align: center;
@@ -138,17 +130,17 @@ td {
   background-color: #f8f9fa;
 }
 
-.units-column {
-  width: 150px;
+.title-price-column {
+  width: 250px;
+  background-color: #dbd8d8;
   text-align: center;
-  background-color: #f8f9fa;
 }
 
 .low-units {
   background-color: yellow;
 }
 
-.barcode-column {
+.price-column {
   width: 250px;
   text-align: center;
   font-weight: bold;

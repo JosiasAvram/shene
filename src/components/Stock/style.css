@@ -62,15 +62,16 @@ body {
 /* Filter container */
 .filter-container {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  margin: 20px;
+  margin: 20px 0px 0px 0px;
 }
 
 .filter-buttons {
   display: flex;
   flex-direction: column;
-  gap: 10px; /* Espacio entre los botones */
+  gap: 10px;
 }
 
 .filter-btn {
@@ -80,7 +81,9 @@ body {
   font-size: 16px;
   border: none;
   cursor: pointer;
-  width: 200px; /* Ajusta el tamaño del botón según sea necesario */
+  width: 200px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .filter-btn:hover {
@@ -95,7 +98,7 @@ body {
 }
 
 .search-container input {
-  width: 60%;
+  width: 75vh;
   padding: 12px;
   font-size: 16px;
   border: 1px solid #ccc;

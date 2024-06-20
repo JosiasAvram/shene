@@ -1,0 +1,83 @@
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: "Arial", sans-serif;
+  line-height: 1.6;
+  background-color: #f8f9fa;
+}
+
+.bajas {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #343a40;
+  color: #ffffff;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-size: 24px;
+}
+
+.section-title {
+  font-family: Roboto;
+  font-size: xxx-large;
+  padding: 0px;
+  margin: 0px;
+}
+
+.link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.nav-links {
+  list-style-type: none;
+  display: flex;
+}
+
+.nav-links li {
+  margin-right: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.logout {
+  width: 25px;
+  height: 25px;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px; /* Espacio entre el navbar y el contenido */
+}
+
+.hacer-baja-btn {
+  background-color: #007bff;
+  color: #ffffff;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px; /* Espacio sobre el botón */
+}
+
+.hacer-baja-btn:hover {
+  background-color: #0056b3;
+}

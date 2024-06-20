@@ -3,10 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import "./style.css";
 import Logout from "../../assets/cerrar-sesion.png";
 import axios from "axios";
+import * as XLSX from "xlsx";
 
-const Stock = () => {
+const Precios = () => {
   const [data, setData] = useState([]);
-  const [showLowValue, setShowLowValue] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [isAscending, setIsAscending] = useState(true);
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const Stock = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/stock")
+      .get("http://localhost:8000/price")
       .then(function (response) {
         setData(response.data);
       })
@@ -44,10 +44,6 @@ const Stock = () => {
     window.print();
   };
 
-  const toggleShowLowValue = () => {
-    setShowLowValue(!showLowValue);
-  };
-
   const deleteCookie = () => {
     localStorage.removeItem("token");
   };
@@ -56,21 +52,40 @@ const Stock = () => {
     setSearchTerm(event.target.value.toLowerCase());
   };
 
+  const exportToExcel = () => {
+    const exportData = data.map(({ productName, price }) => ({
+      Producto: productName,
+      Precio: price,
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(exportData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Precios");
+
+    XLSX.writeFile(workbook, "precios_excel.xlsx");
+  };
+
   const filteredData = data.filter((item) => {
     const lowerProductName = item.productName.toLowerCase();
     const matchesSearch = lowerProductName.includes(searchTerm);
-    const hasLowUnits = item.unitsFresh < 10 || item.unitsFroozen < 10;
 
-    return matchesSearch && (!showLowValue || hasLowUnits);
+    return matchesSearch;
   });
 
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat("es-AR", {
+      style: "currency",
+      currency: "ARS",
+    }).format(price);
+  };
+
   return (
-    <div className="stock">
+    <div className="price">
       <nav className="navbar">
         <div className="logo no-print">Logo</div>
         <h1 className="section-title">
           <Link to="/home" className="link">
-            Stock Frescos
+            Precios
           </Link>
         </h1>
 
@@ -97,49 +112,34 @@ const Stock = () => {
             onChange={handleSearch}
           />
         </div>
+      </div>
 
-        <div className="filter-buttons">
-          <button className="filter-btn" onClick={handleSortByKey}>
-            Ordenar {isAscending ? "A - Z" : "Z - A"}
-          </button>
-          <button className="filter-btn" onClick={handlePrint}>
-            Imprimir
-          </button>
-        </div>
-        <div className="checkbox-container">
-          <label>
-            <input
-              type="checkbox"
-              checked={showLowValue}
-              onChange={toggleShowLowValue}
-            />
-            Productos menores a 10
-          </label>
-        </div>
+      <div className="filter-buttons">
+        <button className="filter-btn" onClick={handleSortByKey}>
+          Ordenar {isAscending ? "A - Z" : "Z - A"}
+        </button>
+        <button className="filter-btn" onClick={handlePrint}>
+          Imprimir
+        </button>
+        <button className="filter-btn" onClick={exportToExcel}>
+          Exportar a Excel
+        </button>
       </div>
 
       <div className="table-container">
         {filteredData.length > 0 ? (
-          <table>
+          <table id="table-to-xls">
             <thead>
               <tr>
                 <th className="titleProductName-column">Productos</th>
-                <th className="units-column">Unidades</th>
-                <th className="titleBarcode-column">Codigo de Barra</th>
+                <th className="title-price-column">Precio x Kilo</th>
               </tr>
             </thead>
             <tbody>
               {filteredData.map((item, index) => (
                 <tr key={index}>
                   <td className="productName-column">{item.productName}</td>
-                  <td
-                    className={`units-column ${
-                      item.unitsFresh < 10 ? "low-units" : ""
-                    }`}
-                  >
-                    {item.unitsFresh}
-                  </td>
-                  <td className="barcode-column">{item.barcode}</td>
+                  <td className="price-column">{formatPrice(item.price)}</td>
                 </tr>
               ))}
             </tbody>
@@ -154,4 +154,4 @@ const Stock = () => {
   );
 };
 
-export default Stock;
+export default Precios;

@@ -107,7 +107,7 @@ body {
   align-items: center;
   padding: 20px 40px;
   font-size: 20px;
-  background-color: #45a049;
+  background-color: #1c411d;
   color: white;
   text-decoration: none;
   border-radius: 10px;
@@ -118,7 +118,7 @@ body {
 }
 
 .big-button:hover {
-  background-color: #1c411d;
+  background-color: #45a049;
 }
 
 img {
