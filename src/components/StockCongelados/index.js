@@ -4,7 +4,7 @@ import "./style.css";
 import Logout from "../../assets/cerrar-sesion.png";
 import axios from "axios";
 
-const Stock = () => {
+const StockCongelados = () => {
   const [data, setData] = useState([]);
   const [showLowValue, setShowLowValue] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -21,7 +21,7 @@ const Stock = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/stock")
+      .get("http://localhost:8000/stock-froozen")
       .then(function (response) {
         setData(response.data);
       })
@@ -70,7 +70,7 @@ const Stock = () => {
         <div className="logo no-print">Logo</div>
         <h1 className="section-title">
           <Link to="/home" className="link">
-            Stock
+            Stock Congelados
           </Link>
         </h1>
 
@@ -125,7 +125,7 @@ const Stock = () => {
             <thead>
               <tr>
                 <th className="titleProductName-column">Productos</th>
-                <th className="units-column">Unidades Frescas</th>
+                <th className="units-column">Unidades Congeladas</th>
                 <th className="titleBarcode-column">Codigo de Barra</th>
               </tr>
             </thead>
@@ -135,10 +135,10 @@ const Stock = () => {
                   <td className="productName-column">{item.productName}</td>
                   <td
                     className={`units-column ${
-                      item.unitsFresh < 10 ? "low-units" : ""
+                      item.unitsFroozen < 10 ? "low-units" : ""
                     }`}
                   >
-                    {item.unitsFresh}
+                    {item.unitsFroozen}
                   </td>
                   <td className="barcode-column">{item.barcode}</td>
                 </tr>
@@ -155,4 +155,4 @@ const Stock = () => {
   );
 };
 
-export default Stock;
+export default StockCongelados;

@@ -21,12 +21,35 @@ const Remitos = () => {
     }
   }, [navigate]);
 
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.target.tagName !== "INPUT") {
+        const key = event.key;
+        if (key === "Tab") {
+          event.preventDefault();
+        }
+        setProductCode((prevCode) => prevCode + key);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []);
+
+  const cleanProductCode = (code) => {
+    return code.replace(/^\t+/, "");
+  };
+
   const handleAddProduct = () => {
     if (productCode.trim() === "") {
       alert("El código del producto no puede estar vacío");
       return;
     }
-    setProducts([...products, { code: productCode, type: productType }]);
+    const cleanedCode = cleanProductCode(productCode);
+    setProducts([...products, { code: cleanedCode, type: productType }]);
     setProductCode("");
   };
 
@@ -75,28 +98,13 @@ const Remitos = () => {
   return (
     <div className="remitos">
       <nav className="navbar">
-        <div className="logo no-print">Logo de la Empresa</div>
+        <div className="logo no-print">Logo</div>
         <h1 className="section-title">
           <Link to="/home" className="link">
             Remitos
           </Link>
         </h1>
         <ul className="nav-links no-print">
-          <li>
-            <Link className="no-print" to="/home">
-              Inicio
-            </Link>
-          </li>
-          <li>
-            <Link className="no-print" to="/stock">
-              Stock
-            </Link>
-          </li>
-          <li>
-            <Link className="no-print" to="/remitos">
-              Remitos
-            </Link>
-          </li>
           <li>
             <Link to="/">
               <img
@@ -199,9 +207,9 @@ const Remitos = () => {
               </tbody>
             </table>
             <input
-              type="number"
+              type="text"
               value={productCode}
-              onChange={(e) => setProductCode(e.target.value)}
+              onChange={(e) => setProductCode(cleanProductCode(e.target.value))}
               placeholder="Código de Producto"
             />
             <select
