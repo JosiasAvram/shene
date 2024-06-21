@@ -59,10 +59,12 @@ const VerStock = () => {
   const filteredData = data.filter((item) => {
     const lowerProductName = item.productName.toLowerCase();
     const matchesSearch = lowerProductName.includes(searchTerm);
-    const hasLowUnits = item.unitsFresh < 10 || item.unitsFroozen < 10;
+    const hasLowUnits = item.unitsFresh < 5 || item.unitsFroozen < 5;
+    const hasNonZeroUnits = item.unitsFresh > 0 || item.unitsFroozen > 0;
 
-    return matchesSearch && (!showLowValue || hasLowUnits);
+    return matchesSearch && (!showLowValue || hasLowUnits) && hasNonZeroUnits;
   });
+
   return (
     <div className="home">
       <nav className="navbar">
@@ -111,7 +113,7 @@ const VerStock = () => {
               checked={showLowValue}
               onChange={toggleShowLowValue}
             />
-            Productos menores a 10
+            Productos menores a 5
           </label>
         </div>
       </div>
@@ -132,7 +134,7 @@ const VerStock = () => {
                   <td className="productName-column">{item.productName}</td>
                   <td
                     className={`units-column ${
-                      item.unitsFresh < 10 ? "low-units" : ""
+                      item.unitsFresh < 5 ? "low-units" : ""
                     }`}
                   >
                     {item.unitsFresh}

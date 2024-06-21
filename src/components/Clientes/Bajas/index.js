@@ -7,7 +7,7 @@ import axios from "axios";
 const Bajas = () => {
   const [data, setData] = useState([]);
   const [scannedProducts, setScannedProducts] = useState([]);
-  const [productsToUpdate, setProductsToUpdate] = useState({});
+  const [productsToUpdate, setProductsToUpdate] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ const Bajas = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/stock")
+      .get("http://localhost:8000/client-stock")
       .then(function (response) {
         setData(response.data);
       })
@@ -41,7 +41,7 @@ const Bajas = () => {
   const closeModal = () => {
     setShowModal(false);
     setScannedProducts([]); // Clear scanned products when closing the modal
-    setProductsToUpdate({});
+    setProductsToUpdate([]);
   };
 
   const handleKeyDown = (e) => {
@@ -57,10 +57,10 @@ const Bajas = () => {
           { id: product.id, productName: product.productName, units: 1 },
         ]);
 
-        setProductsToUpdate((prevState) => ({
+        setProductsToUpdate((prevState) => [
           ...prevState,
-          [product.id]: 1,
-        }));
+          { id: product.id, units: 1 },
+        ]);
       } else {
         alert("Código de barras no encontrado:", scannedValue);
       }
@@ -73,14 +73,21 @@ const Bajas = () => {
     }
   };
 
-  console.log(productsToUpdate);
   const handleSubmit = () => {
-    // Aquí envías el objeto `productsToUpdate` al endpoint correspondiente
+    // Aquí envías el array `productsToUpdate` al endpoint correspondiente para quitar del stock
     axios
-      .post("http://localhost:8000/stock/remove", productsToUpdate)
+      .post("http://localhost:8000/client-stock/remove", productsToUpdate)
       .then((response) => {
-        console.log("Stock actualizado", response.data);
-        alert("stock modificado con exito");
+        alert("Stock modificado con éxito en client-stock");
+
+        // Luego agregas el mismo objeto `productsToUpdate` al endpoint de stock congelado
+        return axios.post(
+          "http://localhost:8000/stock-froozen/add",
+          productsToUpdate
+        );
+      })
+      .then((response) => {
+        alert("Stock modificado con éxito en stock-froozen");
         // Puedes realizar alguna acción después de la actualización, como cerrar el modal
         closeModal();
       })
